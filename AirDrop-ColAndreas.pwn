@@ -497,18 +497,16 @@ public AirDropCount()
 stock DropIt()
 {
 	LastAirDropUsed = 0;
-	new Float:rX, Float:rY, Float:rayoX, Float:rayoY, raycl, Float:rx, Float:ry, Float:rz;
+	new Float:rX, Float:rY, raycl, Float:rx, Float:ry, Float:rz;
 	rX = frandom(44.60, 2997.00);
 	rY = frandom(-2892.90, -768.00);
 	new Float:rayoZ;
-	raycl = CA_RayCastLineAngle(rX, rY, 700.0, rY, rX, -1000.0, rayoX, rayoY, rayoZ, rx, ry, rz);
-	#pragma unused rayoX
-	#pragma unused rayoY
+	raycl = CA_RayCastLineAngle(rX, rY, 700.0, rY, rX, -1000.0, rayoZ, rayoZ, rayoZ, rx, ry, rz);
 	new zone[52];
 	Get2DZoneName(rX, rY, zone, sizeof(zone));
-	if(raycl != WATER_OBJECT && raycl != 0 && strcmp(zone, "Loos Santos", true))
+	if(raycl != WATER_OBJECT && raycl != 0 && strcmp(zone, "Los Santos", true))
 	{
-		new string[512];
+		new string[512];	
 		format(string, sizeof(string), "[AirDropSystem] : An airdrop is dropping in LosSantos - %s, you can find it", zone);
 		SendClientMessageToAll(0xb8ffdbFF, string);
 
@@ -521,7 +519,7 @@ stock DropIt()
 		LastAirDropFindTimer = 0;
 		LastAirDrop[adobjectid] = CreateDynamicObject(19916, rX, rY, rayoZ+100, 0.0, 0.0, 0.0);
 		MoveDynamicObject(LastAirDrop[adobjectid], rX, rY, rayoZ+2.5, 4.0, rx, ry, rz);
-		SetPlayerPos(0, rX, rY, rayoZ+4); //I was testing so I just added this line :D
+		//SetPlayerPos(0, rX, rY, rayoZ+4); //I was testing so I just added this line :D
 	}
 	else
 	{
@@ -538,6 +536,7 @@ public OnDynamicObjectMoved(STREAMER_TAG_OBJECT objectid)
 		GetDynamicObjectPos(objectid, x, y, z);
 		LastAirDrop[Text3Did] = CreateDynamic3DTextLabel("AirDrop\n Type /getdrop to pickup", 0x0066FFCC, x, y, z, 24);
 	}
+	return 1;
 }
 new randomWP[] = 
 {
